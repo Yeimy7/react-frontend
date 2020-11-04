@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Input, Form, Space, notification } from 'antd';
-import { LockOutlined, UserOutlined, SmileOutlined  } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, SmileOutlined } from '@ant-design/icons';
+
+
+import { actionUpdateEmail, actionUpdatePass } from '../../redux/actions/index'
+
 const Login = () => {
     const [user, setUser] = useState('');
+    const [pass, setPass] = useState('');
+
+    const { login } = useSelector(store => store);
+    console.log(login);
+    const dispatch = useDispatch();
+
     const handleInput = (e) => {
         setUser(e.target.value);
+    }
+    const handlePass = (e) => {
+        setPass(e.target.value);
     }
     const router = useRouter();
     const goRegister = () => {
@@ -16,10 +30,12 @@ const Login = () => {
         notification.open({
             message: 'Welcome!',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-          });
+        });
     }, []);
 
     const userLogin = () => {
+        dispatch(actionUpdateEmail(user));
+        dispatch(actionUpdatePass(pass));
         notification['success']({
             message: 'Hi!',
             description:
@@ -56,6 +72,8 @@ const Login = () => {
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             type="password"
                             placeholder="Password"
+                            value={pass}
+                            onChange={handlePass}
                         />
                     </Form.Item>
 

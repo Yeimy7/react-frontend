@@ -1,5 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, notification, InputNumber } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionUpdateEmail, actionUpdateFirstName, actionUpdateLastName, actionUpdateAge } from '../../redux/actions/index'
 
 const layout = {
     labelCol: {
@@ -20,7 +22,9 @@ const validateMessages = {
     },
 };
 
+
 class Register extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -72,7 +76,9 @@ class Register extends React.Component {
                 `Welcome ${this.state.firstName} ${this.state.lastName} with ${this.state.age} years old`
         });
     }
+
     render() {
+
         return (
             <Form {...layout} name="nest-messages" validateMessages={validateMessages} onSubmitCapture={this.handleSubmit}>
                 <h2 style={{ fontSize: 35, fontWeight: 'lighter', color: '#757575', textAlign: 'center' }}>Register</h2>
